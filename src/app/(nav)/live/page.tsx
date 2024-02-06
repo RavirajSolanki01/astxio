@@ -10,7 +10,7 @@ const LiveDataPage = () => {
     const fetchData = async () => {
       const data = await fetch("/api/posts");
 
-      console.log(await data.json());
+      // console.log(await data.json());
     };
 
     fetchData();

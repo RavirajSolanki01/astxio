@@ -29,7 +29,7 @@ const AdminPage = () => {
     const fetchData = async () => {
       const data = await fetch("/api/posts", { next: { revalidate: 1 } });
       const newData = await data.json();
-      console.log(newData, "DATA----");
+      // console.log(newData, "DATA----");
 
       setLiveFormData(newData as IData[]);
     };

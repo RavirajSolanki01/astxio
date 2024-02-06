@@ -8,7 +8,7 @@ interface RCarouselProps {
 
 const RCarousel: React.FC<RCarouselProps> = ({ imgData }) => {
 
-  console.log(imgData, "UHSN-0-00-0");
+  // console.log(imgData, "UHSN-0-00-0");
   
   return (
     <div>

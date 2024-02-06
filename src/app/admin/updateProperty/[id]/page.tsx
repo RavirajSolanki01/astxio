@@ -33,7 +33,7 @@ const UpdateId = ({ params }: { params: IParams }) => {
     const fetchData = async () => {
       const data = await fetch(`/api/posts/${params.id}`);
       const newData = await data.json();
-      console.log(newData.rows[0],"-000----------");
+      // console.log(newData.rows[0],"-000----------");
       
       // setForm(newData[0][0] as IData); // For MySQL
       setForm(newData.rows[0] as IData); // For PostgreSQL
