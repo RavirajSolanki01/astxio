@@ -2,14 +2,16 @@
 import { Grid } from "@mui/material";
 import Image from "next/image";
 import React from "react";
-import EmailIcon from "@mui/icons-material/Email";
-import CallIcon from "@mui/icons-material/Call";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
+import {
+  Mail as EmailIcon,
+  Call as CallIcon,
+  LocationOn as LocationOnIcon,
+} from "@mui/icons-material";
 import { usePathname } from "next/navigation";
 
 const Footer = () => {
   const pathName = usePathname();
- 
+
   const navLinks = [
     {
       href: "/",
