@@ -25,8 +25,8 @@ const ListPropertyCard: React.FC<ListPropertyCardProps> = ({
   return (
     <div className="shadow-md p-4 bg-[#fff] rounded-md">
       <Grid container className="">
-        <Grid item xs={12} sm={12} md={8} className="max-h-[380px]" >
-          <RCarousel imgData={imgData} />
+        <Grid item xs={12} sm={12} md={8} className="max-h-[380px]">
+          {imgData && <RCarousel imgData={imgData} />}
         </Grid>
         <Grid item xs={12} md={4} className="">
           <div className="p-[12px] flex h-[100%] flex-col justify-between">
