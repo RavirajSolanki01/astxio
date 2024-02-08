@@ -1,7 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import DisplayForm from "./DisplayForm";
-import InputForm from "./InputForm";
 import { Grid } from "@mui/material";
 import PropertyCard from "@/components/property-page/PropertyCard";
 import { useRouter } from "next/navigation";
