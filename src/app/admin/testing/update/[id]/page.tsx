@@ -1,15 +1,13 @@
 "use client";
-import { addPropertyRedux } from "@/redux/apiCall";
-import {
-  addPropertyFeatureSuccess,
-  resetReduxState,
-} from "@/redux/propertySlice";
+import React, { useEffect, useState } from "react";
 import { TextField } from "@mui/material";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { INewOnlineData } from "../../page";
 
-const AddProperty = () => {
+interface IParams {
+  id?: string;
+}
+const TestingUpdateId = ({ params }: { params: IParams }) => {
   const router = useRouter();
   const [form, setForm] = useState({
     property_type: "",
@@ -21,38 +19,68 @@ const AddProperty = () => {
     bed: 0,
     bathroom: 0,
     size: 0,
-    // imgData: ["land.png", "land.png", "land.png"],
   });
-  const { error, pending, success } = useSelector(
-    (state: any) => state.property
-  );
-
-  const dispatch = useDispatch();
-
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    addPropertyRedux(form, dispatch);
-  };
 
   useEffect(() => {
-    if (success) {
-      router.push("/admin");
-      dispatch(resetReduxState());
+    const fetchData = async () => {
+      const data = await fetch(`/api/cars/${params.id}`);
+      const newData = await data.json();
+      console.log(newData, "----00-------");
+
+      setForm(newData.result.rows[0] as INewOnlineData);
+    };
+    fetchData();
+  }, []);
+
+  const handleUpdate = async (e: any) => {
+    e.preventDefault();
+
+    try {
+      const result = await fetch(`/api/cars/${params.id}`, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
+      if (result.ok) {
+        router.push("/admin/testing");
+      }
+      const res = await result.json();
+      console.log(res, "res-----", result);
+    } catch (error) {
+      console.log("Something went really wrong!", error);
     }
-  }, [success]);
+  };
+
+  const handleDelete = async (e: any) => {
+    e.preventDefault();
+    try {
+      const result = await fetch(`/api/cars/${params.id}`, {
+        method: "DELETE",
+      });
+      if (result.ok) {
+        router.push("/admin/testing");
+      }
+      console.log("res-----", result);
+    } catch (error) {
+      console.log("Something went really wrong!", error);
+    }
+  };
 
   return (
     <div>
       <div className="p-4">
         <button
-          onClick={() => router.push("/admin")}
+          onClick={() => router.push("/admin/testing")}
           className="bg-green-500 p-2 rounded-md text-white"
         >
-          Go back to Admin Panel
+          Go back to Admin Testing Panel
         </button>
 
         <div className="p-4">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleUpdate}>
             <div className="flex flex-col gap-2">
               <div className="w-full">
                 <TextField
@@ -172,7 +200,14 @@ const AddProperty = () => {
                   type="submit"
                   className="bg-sky-800 p-2 rounded-md text-white"
                 >
-                  {pending ? "Loading..." : "Submit"}
+                  Update
+                </button>
+                <button
+                  //   type="submit"
+                  onClick={handleDelete}
+                  className="bg-sky-800 p-2 rounded-md text-white"
+                >
+                  Delete
                 </button>
               </div>
             </div>
@@ -183,11 +218,4 @@ const AddProperty = () => {
   );
 };
 
-export default AddProperty;
-
-
-/**
- * PostgreSQL:
- * Port: 5432
- * 
- */
+export default TestingUpdateId;

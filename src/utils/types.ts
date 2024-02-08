@@ -8,5 +8,5 @@ export interface PropertyCardProps {
     size: number;
     sofa: number;
     title: string;
-    imgData: Array<string>;
+    imgData?: Array<string>;
   }

@@ -1,15 +1,9 @@
 "use client";
-import { addPropertyRedux } from "@/redux/apiCall";
-import {
-  addPropertyFeatureSuccess,
-  resetReduxState,
-} from "@/redux/propertySlice";
 import { TextField } from "@mui/material";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 
-const AddProperty = () => {
+const AddTesting = () => {
   const router = useRouter();
   const [form, setForm] = useState({
     property_type: "",
@@ -17,38 +11,54 @@ const AddProperty = () => {
     price: "",
     title: "",
     location: "",
-    sofa: 0,
-    bed: 0,
-    bathroom: 0,
-    size: 0,
-    // imgData: ["land.png", "land.png", "land.png"],
+    sofa: "",
+    bed: "",
+    bathroom: "",
+    size: "",
   });
-  const { error, pending, success } = useSelector(
-    (state: any) => state.property
-  );
 
-  const dispatch = useDispatch();
+  //   useEffect(() => {
+  //     const fetchData = async () => {
+  //       const data = await fetch("/api/cars", { next: { revalidate: 1 } });
+  //       const newData = await data.json();
+  //       console.log(newData, "DATA-0000---");
+
+  //       //   setLiveFormData(newData.result.rows as INewOnlineData[]);
+  //     };
+
+  //     fetchData();
+  //   }, []);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-    addPropertyRedux(form, dispatch);
-  };
+    try {
+      const result = await fetch("/api/cars", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(form),
+      });
 
-  useEffect(() => {
-    if (success) {
-      router.push("/admin");
-      dispatch(resetReduxState());
+      const res = await result.json();
+      if (result.ok) {
+        router.push("/admin/testing");
+      }
+      console.log(res, "res-----", result);
+    } catch (error) {
+      console.log("Something went really wrong!", error);
     }
-  }, [success]);
+  };
 
   return (
     <div>
       <div className="p-4">
         <button
-          onClick={() => router.push("/admin")}
+          onClick={() => router.push("/admin/testing")}
           className="bg-green-500 p-2 rounded-md text-white"
         >
-          Go back to Admin Panel
+          Go back to Admin Testing Panel
         </button>
 
         <div className="p-4">
@@ -94,7 +104,10 @@ const AddProperty = () => {
               <div className="w-full flex gap-2">
                 <TextField
                   onChange={(e) =>
-                    setForm((pre) => ({ ...pre, price: e.target.value }))
+                    setForm((pre) => ({
+                      ...pre,
+                      price: e.target.value as string,
+                    }))
                   }
                   value={form.price}
                   className="w-full"
@@ -118,7 +131,7 @@ const AddProperty = () => {
                   onChange={(e) =>
                     setForm((pre) => ({
                       ...pre,
-                      sofa: e.target.value as unknown as number,
+                      sofa: e.target.value,
                     }))
                   }
                   value={form.sofa}
@@ -131,7 +144,7 @@ const AddProperty = () => {
                   onChange={(e) =>
                     setForm((pre) => ({
                       ...pre,
-                      bed: e.target.value as unknown as number,
+                      bed: e.target.value,
                     }))
                   }
                   value={form.bed}
@@ -144,7 +157,7 @@ const AddProperty = () => {
                   onChange={(e) =>
                     setForm((pre) => ({
                       ...pre,
-                      bathroom: e.target.value as unknown as number,
+                      bathroom: e.target.value,
                     }))
                   }
                   value={form.bathroom}
@@ -157,7 +170,7 @@ const AddProperty = () => {
                   onChange={(e) =>
                     setForm((pre) => ({
                       ...pre,
-                      size: e.target.value as unknown as number,
+                      size: e.target.value,
                     }))
                   }
                   value={form.size}
@@ -172,7 +185,7 @@ const AddProperty = () => {
                   type="submit"
                   className="bg-sky-800 p-2 rounded-md text-white"
                 >
-                  {pending ? "Loading..." : "Submit"}
+                  Submit
                 </button>
               </div>
             </div>
@@ -183,11 +196,10 @@ const AddProperty = () => {
   );
 };
 
-export default AddProperty;
-
+export default AddTesting;
 
 /**
  * PostgreSQL:
  * Port: 5432
- * 
+ *
  */

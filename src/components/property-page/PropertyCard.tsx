@@ -9,7 +9,6 @@ import { Divider } from "@mui/material";
 import RButton from "../ReusableComponents/RButton";
 import { PropertyCardProps } from "@/utils/types";
 
-
 const PropertyCard: React.FC<PropertyCardProps> = ({
   bathroom,
   bed,
@@ -24,9 +23,7 @@ const PropertyCard: React.FC<PropertyCardProps> = ({
 }) => {
   return (
     <div className="shadow-md p-4 bg-[#fff] rounded-md">
-      <div>
-        <RCarousel imgData={imgData} />
-      </div>
+      <div>{imgData && <RCarousel imgData={imgData} />}</div>
       <div className="p-[12px]">
         <div className="flex w-full justify-between items-center mb-[10px]">
           <span className="text-[12px]">{property_type}</span>

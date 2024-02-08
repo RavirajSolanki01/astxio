@@ -36,6 +36,8 @@ interface IData {
   imgData: string[];
 }
 
+
+// POST
 export async function addProperty({
   bathroom,
   bed,
@@ -58,11 +60,14 @@ export async function addProperty({
   return data;
 }
 
+// GET by ID
 export async function getSpecificProperty(id: any) {
   const data = await pool.query(`SELECT * FROM listing WHERE id = ${id}`);
   return data;
 }
 
+
+// UPDATE
 export async function updateProperty(
   {
     bathroom,
@@ -84,6 +89,7 @@ export async function updateProperty(
   return data;
 }
 
+// DELETE
 export async function deleteProperty(id: any) {
   const data = await pool.query(`DELETE from listing WHERE id = ${id}`);
   return data;

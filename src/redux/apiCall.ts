@@ -12,6 +12,8 @@ import {
 
 export const addPropertyRedux = async (form: any, dispatch: any) => {
   dispatch(addPropertyFeatureStart());
+  console.log(form, "---datat");
+  
   try {
     const result = await fetch("../api/posts", {
       method: "POST",
